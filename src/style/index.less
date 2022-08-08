@@ -25,11 +25,14 @@ body {
   align-items: center;
   justify-content: space-around;
 
+  #instruction{
+    text-align: center;
+  }
+
   #game-stage {
     width: 304px;
     height: 304px;
     border: 2px solid black;
-    //蛇是绝对定位，参照物是stage
     position: relative;
 
     #snake {
@@ -37,9 +40,7 @@ body {
         width: 10px;
         height: 10px;
         background-color: black;
-        //蛇只能是10px，不然移动会出问题,美化一下蛇
         border: 1px solid @bg-color;
-        //绝对定位，因为蛇要移动
         position: absolute;
       }
     }

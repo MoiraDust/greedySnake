@@ -44,11 +44,9 @@ class GameController {
                 break;
         }
 
-        //调用checkEat,因为吃东西是move的时候会触发的方法
         this.checkEat(X,Y);
 
         try{
-            //调用了set
             this.snake.X = X;
             this.snake.Y = Y;
         }catch (e){
@@ -60,15 +58,11 @@ class GameController {
             setTimeout(this.move.bind(this), 300 - (this.scorePanel.level - 1) * 30);
         }
     }
-    //定义一个方法检查蛇是否吃到食物.X Y是蛇的坐标
     checkEat(X:number, Y:number){
         if( X === this.food.X && Y === this.food.Y){
             console.log("eat food");
-            //食物位置改变
             this.food.change();
-            //分数增加
             this.scorePanel.addScore();
-            //增加身体长度
             this.snake.addBody();
         }
     }

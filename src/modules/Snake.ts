@@ -39,7 +39,6 @@ class Snake {
         }
         this.moveBody();
         this.snakeHead.style.left = value + "px";
-        //更新完头的位置后检查有没有创自己
         this.checkCrush();
     }
 
@@ -82,7 +81,6 @@ class Snake {
 
     }
     checkCrush(){
-        //获取所有的身体，检查头是否和身体重叠
         for (let i = 1; i < this.snakeBodies.length; i++){
             let bd = this.snakeBodies[i] as HTMLElement;
             if(this.X === bd.offsetLeft && this.Y === bd.offsetTop){
