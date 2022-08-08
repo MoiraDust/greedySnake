@@ -48,6 +48,7 @@ class GameController {
         this.checkEat(X,Y);
 
         try{
+            //调用了set
             this.snake.X = X;
             this.snake.Y = Y;
         }catch (e){
