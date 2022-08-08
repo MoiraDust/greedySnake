@@ -1,39 +1,46 @@
 class Snake{
-    //snake container
     snake: HTMLElement;
-    //获取蛇头的元素
     snakeHead: HTMLElement;
-    //include snake head
-    //HTMLAllCollection能自动增加
     snakeBodies: HTMLCollection;
 
     constructor() {
         this.snake = document.getElementById("snake")!;
-        //获取所有div,但是返回值是第一个
         this.snakeHead = this.snake.querySelector("div")!;
-        //返回值为HTMLCollection
         this.snakeBodies = this.snake.getElementsByTagName("div")!;
     }
-    //get position of snake header
     get X(){
         return this.snakeHead.offsetLeft;
     }
     get Y(){
         return this.snakeHead.offsetTop;
     }
-    //set snake
     set X(value){
+        //如果被GC中的move调用后新值和旧值一样，直接return
+        if(this.X === value){
+            return;
+        }
+        //蛇是否创墙。X的合法范围：0-290，检查X是否在这个范围内
+        if(value < 0 || value > 290){
+            //说明蛇创了,得把这个值传给controller
+            throw new Error("寄");
+        }
         this.snakeHead.style.left = value + "px";
     }
     set Y(value){
+        //如果被GC中的move调用后新值和旧值一样，直接return
+        if(this.Y === value){
+            return;
+        }
+        //蛇是否创墙。Y的合法范围：0-290，检查Y是否在这个范围内
+        if(value < 0 || value > 290){
+            //说明蛇创了,得把这个值传给controller，可以抛出异常
+            throw new Error("寄");
+        }
         this.snakeHead.style.top = value + "px";
     }
-    //snake add body
     addBody(){
-        //append会导致穿墙
-        // const newBody = document.createElement("div");
-        // this.snake.appendChild(newBody);
-        this.snake.insertAdjacentHTML("beforeend","<div></div>");
+        this.snake.insertAdjacentHTML("beforeend","<div id='snake-body'></div>");
     }
+
 }
 export default Snake;
