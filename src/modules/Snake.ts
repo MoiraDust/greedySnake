@@ -27,6 +27,28 @@ class Snake {
             //说明蛇创了,得把这个值传给controller
             throw new Error("寄");
         }
+        //蛇在往左的时候不身体能往右，往右的时候身体不能向左走
+        //先检查有没有身体  如果蛇头和第二个身体的坐标一样，则发生了掉头事件(判断蛇头和第二节身体坐标是否一样)
+        //先过了判断再移动身体
+        if (this.snakeBodies[1] && (this.snakeBodies[1] as HTMLElement).offsetLeft === value) {
+            //说明蛇打算掉头
+            // console.log('horizontal turn');
+            // 禁止掉头
+            if (value > this.X) {
+                //新的value大于蛇头的值，说明蛇想往→走,强行让蛇继续←走
+                value = this.X - 10;
+                //判断是否创墙
+                if (value < 0 || value > 290) {
+                    throw new Error("寄");
+                }
+            } else {
+                value = this.X + 10;
+                //判断是否创墙
+                if (value < 0 || value > 290) {
+                    throw new Error("寄");
+                }
+            }
+        }
         //身体跟着移动
         this.moveBody();
         //因为是从后往前移动身体，所以head的移动也应该写在move整个body后面
@@ -34,14 +56,24 @@ class Snake {
     }
 
     set Y(value) {
-        //如果被GC中的move调用后新值和旧值一样，直接return
         if (this.Y === value) {
             return;
         }
-        //蛇是否创墙。Y的合法范围：0-290，检查Y是否在这个范围内
         if (value < 0 || value > 290) {
-            //说明蛇创了,得把这个值传给controller，可以抛出异常
             throw new Error("寄");
+        }
+        if (this.snakeBodies[1] && (this.snakeBodies[1] as HTMLElement).offsetTop === value) {
+            if (value > this.Y) {
+                value = this.Y - 10;
+                if (value < 0 || value > 290) {
+                    throw new Error("寄");
+                }
+            } else {
+                value = this.Y + 10;
+                if (value < 0 || value > 290) {
+                    throw new Error("寄");
+                }
+            }
         }
         //身体跟着移动
         this.moveBody();
